@@ -1,0 +1,33 @@
+#%RAML 1.0
+title: Describes about Flight Service
+version: v1
+
+/flights:      
+  get:
+    queryParameters:
+      flightName:
+        description: describes about the flight name
+        type: string
+        required: true
+        example: SFO            
+    responses:
+      200:
+        body:
+          application/json:
+            type: object
+            example: |
+              {
+              "code": "ER39rj",
+              "price": 954,
+              "origin": "MUA",
+              "destination": "SFO",
+              "departureDate": "2015/02/12",
+              "planeType": "Boeing 777",
+              "airlineName": "United",
+              "emptySeats": 23
+                      }
+
+/all-flights:    
+  get:
+            
+    

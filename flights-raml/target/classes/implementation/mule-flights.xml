@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:request-config name="HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="9bf36519-2853-4967-b720-8f15e90697f2" >
+		<http:request-connection host="mu.mulesoft-training.com" port="80" />
+	</http:request-config>
+	<sub-flow name="get-flights-by-destination-flow" doc:id="327ef03c-3838-4dc9-abd6-59d5789663d1" >
+		<set-variable value="#[attributes.queryParams.flightName]" doc:name="Set Variable" doc:id="759e8fd1-acf3-460b-a435-da22905df5ac" variableName="flightName"/>
+		<http:request method="GET" doc:name="Request" doc:id="fe627b15-a27a-458b-bded-f22779bf0ced" config-ref="HTTP_Request_configuration" path="/essentials/united/flights/{flightName}">
+			<http:uri-params ><![CDATA[#[output application/java
+---
+{
+	"flightName" : vars.flightName
+}]]]></http:uri-params>
+		</http:request>
+		<set-payload value="#[payload]" doc:name="Set Payload" doc:id="d05e31b9-c215-4548-b9c9-83ed2811b205" mimeType="application/json"/>
+	</sub-flow>
+</mule>
